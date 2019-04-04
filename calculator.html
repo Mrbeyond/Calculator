@@ -1,0 +1,131 @@
+	<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> CALCULATOR EDITION</title>
+<style type="text/css">
+	nav{
+		position: relative;
+		width: 300px;
+		height: 380px;
+		background-color: silver;
+		border-radius: 20px;
+		border: 2px solid rosybrown;
+		border-right: 5px solid rosybrown;
+		border-bottom: 5px solid rosybrown;
+		box-shadow: 0 10px 10px 0 rgba(0,0,0,0.4);			
+
+	}
+
+	#anscr{ 
+			border:4px solid brown;
+			position: absolute;
+			box-sizing: border-box;
+			width: 280px;
+			height: 61px;
+			background-color: gray;
+			margin: 10px 10px 10px 10px;
+			line-height: 30px;
+			font-size: 30px;
+			text-align: right;
+			color: white;	}
+
+
+	#calc-name{	 
+				line-height: 25px;
+				 font-size: 25px; 
+				 font-weight: bold;
+					 }
+	div{
+		position: absolute;
+		margin: 100px 5px 5px 5px;}
+	div > input{ 
+			border:1px solid brown;
+			box-sizing: border-box;
+			width: 50px;
+			height: 30px;
+			background-color: gray;
+			margin: 0px 10px 10px 10px;
+			border-radius: 5px;}
+	
+
+</style>	
+</head>
+<body>
+	<nav>
+		<center><span id="calc-name">Mr BEyond's Calculator</span></center>
+		<input id="anscr" disabled="">
+		<div> 
+			<input value="OFF" type="button" onclick="off()" style="background-color: red"><input value="sqrt" type="button" onclick="prom('sqrt')"><input value="%" type="button" onclick="prom('pcnt')"><input value="ON" type="button" onclick="on()" style="background-color: coral;" ><br>
+
+			<input value="AC" type="button" onclick="power('ac')" style="background-color: salmon"><input value="1/x" type="button" onclick="prom('over')"><input value="x**" type="button" onclick="prom('sqr')"><input value="del" type="button" onclick="power('del')" style="background-color: salmon"><br>
+
+			<input value="7" type="button" onclick="key('7')"><input value="8" type="button" onclick="key('8')"><input value="9" type="button" onclick="key('9')"><input value="*" type="button" onclick="oper('mult')"><br>
+
+			<input value="4" type="button" onclick="key('4')"><input value="5" type="button" onclick="key('5')"><input value="6" type="button" onclick="key('6')"><input value="+" type="button" onclick="oper('add')"><br>
+
+			<input value="1" type="button" onclick="key('1')"><input value="2" type="button" onclick="key('2')"><input value="3" type="button" onclick="key('3')"><input value="-" type="button" onclick="oper('sub')"><br>
+
+			<input value="0" type="button" onclick="key('0')"><input value="." type="button" onclick="key('.')"><input value="=" type="button" onclick="equal()"><input value="/" type="button" onclick="oper('dvd')"><br>
+		</div>
+		<script type="text/javascript">
+				var condition= false;
+				var equalDone = false;
+				var recalc=false;
+
+				function on(){recalc=false;
+							condition=true;
+							anscr.value=0;}
+				
+				function off(){condition=false;
+								anscr.value='';}
+
+			function power(p){		 				
+				var task = p; 
+				if (task=="del") {anscr.value = anscr.value.slice(0,-1); if (anscr.value==""){anscr.value=0;}}
+			    if (task=="ac") { if (condition){anscr.value=0;}   }	} 
+			
+			function key(k){	
+				recalc=false; 
+				if (condition){ 
+					if(equalDone){
+						anscr.value = 0;
+						equalDone = false;
+								}
+					if (anscr.value==0.){anscr.value =anscr.value.slice(0,0);}
+					anscr.value += k;  } }
+
+			function oper(y){
+				init=anscr.value;
+				anscr.value="";
+				check = y;    }
+
+			function equal(){
+				if(condition){
+				 if (!recalc){anscr.value=anscr.value;} 
+				 if (recalc) { anscr.value=fin; } 
+					equalDone = true;
+					fin = anscr.value;
+					if (check =="add" ) {anscr.value=parseFloat(init)+parseFloat(fin); recalc=true; init=anscr.value;}
+					if (check =="sub" ) {anscr.value= parseFloat(init-fin); recalc=true; init=anscr.value;}
+					if (check =="dvd" ) {anscr.value= eval(parseFloat(init/fin)); recalc=true; init=anscr.value;}
+					if (check =="mult" ) {anscr.value=parseFloat(fin*init); recalc=true; init=anscr.value;}
+							 
+									} }
+
+			function prom(s){
+						var comm = s;
+						if (condition) {
+						if (comm =="sqrt") { anscr.value=parseFloat( Math.sqrt(anscr.value));}
+						if (comm =="sqr") { anscr.value=parseFloat(Math.pow(anscr.value, 2));}
+						if (comm=="pcnt") { if (anscr.value==0){anscr.value=0;}else{
+						  anscr.value=parseFloat( anscr.value*(100))+"%";}  }
+						if (comm =="over") { anscr.value= parseFloat(1/anscr.value);}
+					equalDone = true;								}
+									} 
+		</script>
+	</nav>
+</body>
+</html>
